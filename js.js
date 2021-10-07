@@ -142,8 +142,6 @@ const app = {
       cd.style.opacity = newWidth / cdWidth;
     }
 
-    // asdfdsafd
-
     // Xu ly khi click play
     playBtn.onclick = function() {
       if (_this.isPlaying) {
@@ -306,6 +304,8 @@ const app = {
     heading.textContent = this.currentSong.name;
     cdThumb.style.backgroundImage = `url('${this.currentSong.image}')`;
     audio.src = `${this.currentSong.path}`;
+
+    currentProgress.value = '0';
 
     audio.play();
     this.activeSong();
