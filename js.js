@@ -14,6 +14,8 @@
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
+const PlAYER_STORAGE_KEY = "MUSIC_PLAYER";
+
 const player = $('.player');
 const heading = $('header h2');
 const cdThumb = $('.cd-thumb');
@@ -32,6 +34,22 @@ const app = {
   currentIndex: 0,
   isPlaying: false,
   onfocus: false,
+  config: JSON.parse(localStorage.getItem(PlAYER_STORAGE_KEY)) || {},
+    setConfig (key, value) {
+        this.config[key] = value;
+        localStorage.setItem(PlAYER_STORAGE_KEY,JSON.stringify(this.config));
+    },
+    loadConfig () {
+        this.isRandom = this.config.isRandom || this.isRandom;
+        this.isRepeat = this.config.isRepeat || this.isRepeat;
+        this.currentIndex = this.config.currentIndex || this.currentIndex;
+        this.currentTime = this.config.currentTime || this.currentTime;
+        // Hiển thị trạng thái ban đầu của buttom random và repeat
+        repeatBtn.classList.toggle('active',this.isRepeat);
+        randomBtn.classList.toggle('active',this.isRandom);
+
+
+    },
   songs: [
     {
       name: "Don't Let Me Down",
@@ -304,6 +322,15 @@ const app = {
     heading.textContent = this.currentSong.name;
     cdThumb.style.backgroundImage = `url('${this.currentSong.image}')`;
     audio.src = `${this.currentSong.path}`;
+
+    if(this.currentIndex == this.config.currentIndex) {
+      audio.currentTime = this.config.currentTime;
+    }
+    else {
+        audio.currentTime = 0;
+    }
+  
+    this.setConfig("currentIndex", this.currentIndex);
 
     currentProgress.value = '0';
 
