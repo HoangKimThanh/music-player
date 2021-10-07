@@ -142,6 +142,8 @@ const app = {
       cd.style.opacity = newWidth / cdWidth;
     }
 
+    // asdfdsafd
+
     // Xu ly khi click play
     playBtn.onclick = function() {
       if (_this.isPlaying) {
